@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+    environment {
+        MULE_USER = credentials('sree').username
+        MULE_PASS = credentials('sree@123).password
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                // Check out your code from SCM
+                git 'https://github.com/sobhagayatri/myfirstmuleproject.git'
+            }
+        }
+        stage('Build and Deploy') {
+            steps {
+                // Use Maven to build and deploy
+                sh 'mvn clean deploy -DmuleDeploy -DskipTests -Dmule.username=$MULE_USER -Dmule.password=$MULE_PASS'
+            }
+        }
+    }
+}
